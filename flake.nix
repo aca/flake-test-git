@@ -10,9 +10,9 @@
     nixpkgs,
   }: {
     # packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-    overlays.default = final: prev: {
-      templ = self.packages.${final.stdenv.system}.flake-test-git;
-    };
+    # overlays.default = final: prev: {
+    #   templ = self.packages.${final.stdenv.system}.flake-test-git;
+    # };
 
     packages.x86_64-linux.flake-test-git = let
       pkgs = import nixpkgs {
@@ -28,20 +28,25 @@
         version = "1.0.0";
 
         src = pkgs.fetchgit {
+        # src = pkgs.fetchFromGitHub {
+        # src = fetchgit {
           url = "https://github.com/aca/zapret.git";
-          rev = "HEAD";
+          # rev = "main";
           sha256 = "sha256-sbwLK0nWUFstZ9RXqetSbBgW60wS5/0FLXM1VhublDk=";
         };
         # src = fs.toSource {
         #   root = ./.;
         #   fileset = fileSet;
         # };
+        phases = ["installPhase" "postInstall"];
         installPhase = ''
-          ./install_bin.sh
+          mkdir -p $out;
+          cp -r $src $out/src;
+          ls -al;
+          $out/src/install_bin.sh
         '';
         postInstall = ''
-          mkdir -p $out/src
-          cp -v * $out/src/
+          ls -al;
         '';
 
         propagatedBuildInputs = with pkgs; [
