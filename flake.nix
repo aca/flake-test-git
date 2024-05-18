@@ -43,9 +43,7 @@
         installPhase = ''
           mkdir -p $out
           cp -r --no-preserve=mode $src $out/src
-          chmod -R +x $out/src/binaries
-          chmod -R +x $out/src/init.d/sysv
-          chmod +x $out/src/install_bin.sh
+          chmod -R +x $out/src
           $out/src/install_bin.sh
         '';
 
