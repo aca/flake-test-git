@@ -29,7 +29,7 @@
         };
         installPhase = ''
           mkdir -p $out/bin;
-          install -t $out/bin flake-test-git;
+          cp bin/flake-test-git $out/bin;
         '';
         postInstall = ''
           mkdir -p $out/src
