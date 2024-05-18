@@ -28,11 +28,11 @@
         version = "1.0.0";
 
         src = pkgs.fetchgit {
-          # src = pkgs.fetchFromGitHub {
-          # src = fetchgit {
           url = "https://github.com/aca/zapret.git";
-          # rev = "main";
-          sha256 = "sha256-sbwLK0nWUFstZ9RXqetSbBgW60wS5/0FLXM1VhublDk=";
+          # ref = "main";
+          rev = "11cda4f000d1c138dfff1b8f91ded1fd5304943a";
+          sha256 = "sha256-yfVzMjU6GNzb7hD3zvv1Ttl75DdvmUkXwOHANyt2uzY=";
+          # sha256 = "sha256-sbwLK0nWUFstZ9RXqetSbBgW60wS5/0FLXM1VhublDk=";
         };
         # src = fs.toSource {
         #   root = ./.;
@@ -41,12 +41,11 @@
         phases = ["installPhase" "postInstall"];
         installPhase = ''
           mkdir -p $out;
-          cp -r $src $out/src;
-          $out/src/install_bin.sh
-          ls -al;
+          cp -rp $src $out/src;
+          sh $out/src/install_bin.sh;
         '';
         postInstall = ''
-          echo
+          ls -al;
         '';
 
         outputs = ["out"];
