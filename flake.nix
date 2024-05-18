@@ -38,15 +38,16 @@
         #   root = ./.;
         #   fileset = fileSet;
         # };
-        phases = ["installPhase" "postInstall"];
+        phases = ["installPhase"];
+
         installPhase = ''
-          mkdir -p $out;
-          cp -rp $src $out/src;
-          sh $out/src/install_bin.sh;
+          mkdir -p $out
+          cp -r --no-preserve=mode $src $out/src
+          chmod -R +x $out/src/binaries
+          chmod +x $out/src/install_bin.sh
+          $out/src/install_bin.sh
         '';
-        postInstall = ''
-          ls -al;
-        '';
+
 
         outputs = ["out"];
 
