@@ -23,22 +23,27 @@
       pkgs.stdenv.mkDerivation {
         pname = "flake-test-git";
         version = "1.0.0";
-        src = fs.toSource {
-          root = ./.;
-          fileset = fileSet;
+
+        src = pkgs.fetchgit {
+          url = "https://github.com/aca/zapret.git";
+          rev = "HEAD";
+          sha256 = "sha256-sbwLK0nWUFstZ9RXqetSbBgW60wS5/0FLXM1VhublDk=";
         };
+        # src = fs.toSource {
+        #   root = ./.;
+        #   fileset = fileSet;
+        # };
         installPhase = ''
-          mkdir -p $out/bin;
-          cp bin/flake-test-git $out/bin;
+          ./install_bin.sh
         '';
         postInstall = ''
           mkdir -p $out/src
           cp -v * $out/src/
         '';
 
-        # nativeBuildInputs = with pkgs; [
-        #   cmake
-        # ];
+        propagatedBuildInputs = with pkgs; [
+          curl
+        ];
       };
 
     packages.x86_64-linux.default = self.packages.x86_64-linux.flake-test-git;
