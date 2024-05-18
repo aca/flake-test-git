@@ -28,8 +28,8 @@
         version = "1.0.0";
 
         src = pkgs.fetchgit {
-        # src = pkgs.fetchFromGitHub {
-        # src = fetchgit {
+          # src = pkgs.fetchFromGitHub {
+          # src = fetchgit {
           url = "https://github.com/aca/zapret.git";
           # rev = "main";
           sha256 = "sha256-sbwLK0nWUFstZ9RXqetSbBgW60wS5/0FLXM1VhublDk=";
@@ -43,16 +43,18 @@
           mkdir -p $out;
           cp -r $src $out/src;
           ls -al;
-          $out/src/install_bin.sh
         '';
         postInstall = ''
-          ls -al;
+          $out/src/install_bin.sh
         '';
 
-          outputs = [ "out" ];
+        outputs = ["out"];
 
         propagatedBuildInputs = with pkgs; [
           curl
+          iptables
+          gawk
+          procps
         ];
       };
 
