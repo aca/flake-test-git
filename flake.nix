@@ -41,8 +41,8 @@
         phases = ["installPhase" "postInstall"];
         installPhase = ''
           mkdir -p $out;
-          $out/src/install_bin.sh
           cp -r $src $out/src;
+          $out/src/install_bin.sh
           ls -al;
         '';
         postInstall = ''
