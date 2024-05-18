@@ -10,6 +10,9 @@
     nixpkgs,
   }: {
     # packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
+    overlays.default = final: prev: {
+      templ = self.packages.${final.stdenv.system}.flake-test-git;
+    };
 
     packages.x86_64-linux.flake-test-git = let
       pkgs = import nixpkgs {
