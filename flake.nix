@@ -49,6 +49,8 @@
           ls -al;
         '';
 
+          outputs = [ "out" ];
+
         propagatedBuildInputs = with pkgs; [
           curl
         ];
