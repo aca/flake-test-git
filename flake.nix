@@ -11,7 +11,7 @@
   }: {
     # packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
 
-    packages.x86_64-linux.hello-repeater = let
+    packages.x86_64-linux.flake-test-git = let
       pkgs = import nixpkgs {
         system = "x86_64-linux";
       };
@@ -21,12 +21,16 @@
       ];
     in
       pkgs.stdenv.mkDerivation {
-        pname = "hello-repeater";
+        pname = "flake-test-git";
         version = "1.0.0";
         src = fs.toSource {
           root = ./.;
           fileset = fileSet;
         };
+        installPhase = ''
+          mkdir -p $out/bin;
+          install -t $out/bin flake-test-git;
+        '';
         postInstall = ''
           mkdir -p $out/src
           cp -v * $out/src/
@@ -37,6 +41,6 @@
         # ];
       };
 
-    packages.x86_64-linux.default = self.packages.x86_64-linux.hello-repeater;
+    packages.x86_64-linux.default = self.packages.x86_64-linux.flake-test-git;
   };
 }
