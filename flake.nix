@@ -17,7 +17,7 @@
       };
       fs = pkgs.lib.fileset;
       fileSet = fs.unions [
-        ./hello.sh
+        ./.
       ];
     in
       pkgs.stdenv.mkDerivation {
@@ -28,13 +28,13 @@
           fileset = fileSet;
         };
         postInstall = ''
-          mkdir $out
-          cp -v hello.sh $out/bin
+          mkdir -p $out/src
+          cp -v * $out/src/
         '';
 
-        nativeBuildInputs = with pkgs; [
-          cmake
-        ];
+        # nativeBuildInputs = with pkgs; [
+        #   cmake
+        # ];
       };
 
     packages.x86_64-linux.default = self.packages.x86_64-linux.hello-repeater;
