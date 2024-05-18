@@ -37,7 +37,7 @@ NIX_CC='/nix/store/md6hh4rrcrf99nssvcam3qaqs3skj086-gcc-wrapper-13.2.0'
 export NIX_CC
 NIX_CC_WRAPPER_TARGET_HOST_x86_64_unknown_linux_gnu='1'
 export NIX_CC_WRAPPER_TARGET_HOST_x86_64_unknown_linux_gnu
-NIX_CFLAGS_COMPILE=' -frandom-seed=50fvjb1zmi'
+NIX_CFLAGS_COMPILE=' -frandom-seed=cdmg77s26z'
 export NIX_CFLAGS_COMPILE
 NIX_ENFORCE_NO_NATIVE='1'
 export NIX_ENFORCE_NO_NATIVE
@@ -155,6 +155,10 @@ pname='hello-repeater'
 export pname
 declare -a postFixupHooks=('cmakePcfileCheckPhase' '_makeSymlinksRelativeInAllOutputs' '_multioutPropagateDev' )
 declare -a postHooks=('makeCmakeFindLibs' )
+postInstall='mkdir $out
+cp -v hello.sh $out/bin
+'
+export postInstall
 declare -a postUnpackHooks=('_updateSourceDateEpochFromSourceRoot' )
 declare -a preConfigureHooks=('_multioutConfig' )
 preConfigurePhases=' updateAutotoolsGnuConfigScriptsPhase'
@@ -170,7 +174,7 @@ declare -a propagatedTargetDepFiles=('propagated-target-target-deps' )
 setOutputFlags=''
 shell='/nix/store/h3bhzvz9ipglcybbcvkxvm4vg9lwvqg4-bash-5.2p26/bin/bash'
 export shell
-src='/nix/store/ifi0gavygnydgks00pva6i6y9ziylzzz-flake-example-hello-repeater'
+src='/nix/store/cwbxnl2rjhxzxs2bpsy1b1kbi9qdjmmn-source'
 export src
 stdenv='/nix/store/wq046wv3s3h4m2n9ak3j534di2pzra93-stdenv-linux'
 export stdenv

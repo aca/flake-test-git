@@ -10,24 +10,27 @@
     nixpkgs,
   }: {
     # packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-    fs = lib.fileset;
-    fileSet = fs.unions [
-      ./hello.sh
-    ];
 
     packages.x86_64-linux.hello-repeater = let
       pkgs = import nixpkgs {
         system = "x86_64-linux";
       };
+      fs = pkgs.lib.fileset;
+      fileSet = fs.unions [
+        ./hello.sh
+      ];
     in
       pkgs.stdenv.mkDerivation {
         pname = "hello-repeater";
         version = "1.0.0";
-        src = pkgs.fetchgit {
-          url = "https://github.com/breakds/flake-example-hello-repeater.git";
-          rev = "c++-code-alone";
-          sha256 = "sha256-/3tT3jBmWLaENcBRQhi2o3DHbBp2yiYsq2HMD/OYXNU=";
+        src = fs.toSource {
+          root = ./.;
+          fileset = fileSet;
         };
+        postInstall = ''
+          mkdir $out
+          cp -v hello.sh $out/bin
+        '';
 
         nativeBuildInputs = with pkgs; [
           cmake
